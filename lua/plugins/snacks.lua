@@ -210,6 +210,18 @@ return {
       },
       terminal = {
         enabled = true,
+        keys = {
+          -- Single <Esc> hides the terminal and returns focus to the previous window.
+          -- Overrides Snacks' default double-Esc timer approach which is unreliable.
+          term_normal = {
+            "<Esc>",
+            function(self)
+              self:hide()
+            end,
+            mode = "t",
+            desc = "Hide terminal",
+          },
+        },
       },
     }
   end,
