@@ -314,7 +314,7 @@ Definidos en `lua/config/keymaps.lua` y en los plugins.
 | `Ctrl-s` | n / i / v | Guardar archivo | keymaps.lua |
 | `Esc` | n | Limpiar resaltado de búsqueda | keymaps.lua |
 | `Esc Esc` | t | Salir del modo terminal | keymaps.lua |
-| `Ctrl-h/j/k/l` | n | Moverse entre ventanas (splits) | keymaps.lua |
+| `Ctrl-h/j/k/l` | n / t | Moverse entre ventanas (splits); funciona también desde el terminal | keymaps.lua |
 | `Alt-h/j/k/l` | i / c / o / t / s / x | Mover cursor (reemplaza flechas) | keymaps.lua |
 | Flechas | todos | Deshabilitadas | keymaps.lua |
 

@@ -210,7 +210,13 @@ return {
       },
       terminal = {
         enabled = true,
-        win = { style = "terminal" },
+        win = {
+          style = "terminal",
+          keys = {
+            -- <Esc><Esc> salir del modo terminal (volver a modo normal)
+            term_normal = { "<Esc><Esc>", "<C-\\><C-n>", mode = "t", expr = false, desc = "Exit terminal mode" },
+          },
+        },
       },
     }
   end,
