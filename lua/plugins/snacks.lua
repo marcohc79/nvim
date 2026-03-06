@@ -213,11 +213,29 @@ return {
         win = {
           style = "terminal",
           keys = {
-            -- Deshabilitar el handler de Snacks para <Esc>.
-            -- Así funciona el mapeo global <Esc><Esc> → <C-\><C-n> de keymaps.lua:
-            -- primer <Esc> → Neovim espera timeoutlen (300ms) por un segundo <Esc>;
-            -- si llega → sale del terminal; si no → pasa <Esc> al proceso terminal.
-            term_normal = false,
+            -- Doble <Esc> para salir del modo terminal (retorna <C-\><C-n>).
+            -- Primer <Esc>: arranca timer de 400ms y pasa <Esc> al terminal.
+            -- Segundo <Esc> dentro de 400ms: cancela timer y sale del terminal.
+            term_normal = {
+              "<esc>",
+              function(self)
+                -- El timer se crea una vez por instancia de terminal y vive
+                -- mientras dure la ventana; se limpia con GC al cerrarla.
+                self.esc_timer = self.esc_timer or (vim.uv or vim.loop).new_timer()
+                if self.esc_timer:is_active() then
+                  self.esc_timer:stop()
+                  return "<C-\\><C-n>"
+                else
+                  -- El callback es vacío: solo necesitamos que el timer esté activo
+                  -- para detectar el segundo <Esc> antes de que expire.
+                  self.esc_timer:start(400, 0, function() end)
+                  return "<esc>"
+                end
+              end,
+              mode = "t",
+              expr = true,
+              desc = "Doble Esc para salir del modo terminal",
+            },
           },
         },
       },
