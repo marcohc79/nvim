@@ -30,6 +30,19 @@ return {
       { "<auto>", mode = "nxso" },
     },
 
+    -- Grupos de <leader> con sus iconos (deben ir en spec, no en keys)
+    spec = {
+      { "<leader>b", group = "[b]uffer",          icon = "󰈙" },
+      { "<leader>c", group = "[c]ode",            icon = "" },
+      { "<leader>d", group = "[d]ebug",           icon = "" },
+      { "<leader>f", group = "[f]ind",            icon = "" },
+      { "<leader>g", group = "[g]it",             icon = "" },
+      { "<leader>h", group = "git [h]unk",        icon = "󰊢" },
+      { "<leader>t", group = "[t]oggle/terminal", icon = "" },
+      { "<leader>a", group = "[a]i (Copilot)",    icon = "" },
+      { "<leader>u", group = "[u]i",              icon = "󰒓" },
+    },
+
   },
 
   keys = {
@@ -40,15 +53,5 @@ return {
       end,
       desc = "Buffer Local Keymaps (which-key)",
     },
-
-    { "<leader>b", group = "[b]uffer",          icon = "󰈙" },
-    { "<leader>c", group = "[c]ode",            icon = "" },
-    { "<leader>d", group = "[d]ebug",           icon = "" },
-    { "<leader>f", group = "[f]ind",            icon = "" },
-    { "<leader>g", group = "[g]it",             icon = "" },
-    { "<leader>h", group = "git [h]unk",        icon = "󰊢" },
-    { "<leader>t", group = "[t]oggle/terminal", icon = "" },
-    { "<leader>a", group = "[a]i (Copilot)",    icon = "" },
-    { "<leader>u", group = "[u]i",              icon = "󰒓" },
   },
 }
