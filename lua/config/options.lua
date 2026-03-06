@@ -60,7 +60,13 @@ vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
+-- Affects how long Neovim waits after a key in a mapped sequence (e.g. <leader>).
 vim.opt.timeoutlen = 300
+-- Decrease key-code sequence wait time.
+-- Without this, Neovim uses timeoutlen (300ms) to wait for terminal escape sequences,
+-- which breaks the Snacks double-Esc terminal exit: the 200ms Snacks timer expires
+-- before Neovim even processes the second <Esc> press.
+vim.opt.ttimeoutlen = 10
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
