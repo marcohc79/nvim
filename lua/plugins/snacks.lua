@@ -213,8 +213,26 @@ return {
         win = {
           style = "terminal",
           keys = {
-            -- <Esc><Esc> salir del modo terminal (volver a modo normal)
-            term_normal = { "<Esc><Esc>", "<C-\\><C-n>", mode = "t", expr = false, desc = "Exit terminal mode" },
+            -- Double-Esc para salir del modo terminal.
+            -- Usa un timer de 400ms (el default de Snacks es 200ms, muy corto).
+            -- Funciona: primer <Esc> pasa al terminal y arranca el timer;
+            -- segundo <Esc> dentro de 400ms → stopinsert (sale del modo terminal).
+            term_normal = {
+              "<esc>",
+              function(self)
+                self.esc_timer = self.esc_timer or (vim.uv or vim.loop).new_timer()
+                if self.esc_timer:is_active() then
+                  self.esc_timer:stop()
+                  vim.cmd("stopinsert")
+                else
+                  self.esc_timer:start(400, 0, function() end) -- callback vacío: solo necesitamos que el timer esté activo
+                  return "<esc>"
+                end
+              end,
+              mode = "t",
+              expr = true,
+              desc = "Double Esc para salir del modo terminal",
+            },
           },
         },
       },
