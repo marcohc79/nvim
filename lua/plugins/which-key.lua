@@ -30,6 +30,19 @@ return {
       { "<auto>", mode = "nxso" },
     },
 
+    -- Definición de grupos con iconos (leídos por which-key, no por lazy)
+    spec = {
+      { "<leader>a", group = "[a]i (Copilot)",    icon = { icon = "󰚩", color = "purple" } },
+      { "<leader>b", group = "[b]uffer",          icon = { icon = "󰓩", color = "cyan"   } },
+      { "<leader>c", group = "[c]ode",            icon = { icon = "󰅱", color = "orange" } },
+      { "<leader>d", group = "[d]ebug (DAP)",     icon = { icon = "󰃤", color = "red"    } },
+      { "<leader>f", group = "[f]ind",            icon = { icon = "󰍉", color = "blue"   } },
+      { "<leader>g", group = "[g]it",             icon = { icon = "󰊢", color = "orange" } },
+      { "<leader>h", group = "git [h]unk",        icon = { icon = "󱓊", color = "red"    } },
+      { "<leader>t", group = "[t]oggle/terminal", icon = { icon = "󰆍", color = "green"  } },
+      { "<leader>u", group = "[u]i",              icon = { icon = "󰙵", color = "yellow" } },
+    },
+
   },
 
   keys = {
@@ -40,14 +53,5 @@ return {
       end,
       desc = "Buffer Local Keymaps (which-key)",
     },
-
-    { "<leader>b", group = "[b]uffer" },
-    { "<leader>c", group = "[c]ode" },
-    { "<leader>f", group = "[f]ind" },
-    { "<leader>g", group = "[g]it" },
-    { "<leader>h", group = "git [h]unk" },
-    { "<leader>t", group = "[t]oggle/terminal" },
-    { "<leader>a", group = "[a]i (Copilot)" },
-    { "<leader>u", group = "[u]i" },
   },
 }
