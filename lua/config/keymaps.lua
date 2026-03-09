@@ -1,3 +1,13 @@
+-- Copilot: activar/desactivar sugerencias automaticas con <leader>uc
+vim.keymap.set("n", "<leader>uc", function()
+  local suggestion = require("copilot.suggestion")
+  -- nil significa que usa el valor del config (auto_trigger = false)
+  local current = vim.b.copilot_suggestion_auto_trigger
+  if current == nil then current = false end
+  suggestion.toggle_auto_trigger()
+  vim.notify("Copilot auto-trigger: " .. (not current and "ON" or "OFF"), vim.log.levels.INFO)
+end, { desc = "Toggle Copilot auto-trigger" })
+
 -- LSP keymaps (solo se activan cuando un servidor LSP se conecta al buffer)
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
