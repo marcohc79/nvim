@@ -5,7 +5,7 @@ return {
   opts = {
     suggestion = {
       enabled = true,
-      auto_trigger = true,
+      auto_trigger = false,
       keymap = {
         accept = "<M-y>",          -- Acepta la sugerencia completa
         accept_word = "<M-w>",     -- Acepta solo la siguiente palabra

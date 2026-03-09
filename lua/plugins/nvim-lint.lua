@@ -18,6 +18,15 @@ return {
       -- rust: clippy ya está integrado en rust-analyzer (LSP)
     }
 
+    -- cpplint sigue el estilo de Google (espacios), pero con un .clang-format
+    -- de tipo Linux kernel (estilo Linus Torvalds) el código usa tabuladores.
+    -- Desactivamos los filtros que generan falsos positivos en ese estilo:
+    --   whitespace/tab   → el kernel usa tabs a 8 espacios, no son errores
+    --   legal/copyright  → ficheros de proyecto/kernel no llevan cabecera legal
+    vim.list_extend(lint.linters.cpplint.args, {
+      "--filter=-whitespace/tab,-legal/copyright",
+    })
+
     -- Ejecutar linters al guardar y al salir de modo inserción
     vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "BufReadPost" }, {
       group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
