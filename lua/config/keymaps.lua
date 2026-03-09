@@ -12,6 +12,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, vim.tbl_extend("force", opts, { desc = "LSP: Line diagnostics" }))
     vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, vim.tbl_extend("force", opts, { desc = "Next diagnostic" }))
     vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, vim.tbl_extend("force", opts, { desc = "Previous diagnostic" }))
+    -- Inlay hints desactivados por defecto; activar/desactivar con <leader>uh
+    vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
   end,
 })
 
