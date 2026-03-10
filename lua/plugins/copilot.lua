@@ -22,4 +22,16 @@ return {
       gitrebase = false,
     },
   },
+  keys = {
+    {
+      "<leader>aT",
+      function()
+        local suggestion = require("copilot.suggestion")
+        local current = vim.b.copilot_suggestion_auto_trigger or false
+        suggestion.toggle_auto_trigger()
+        vim.notify("Copilot auto-trigger: " .. (not current and "ON" or "OFF"), vim.log.levels.INFO)
+      end,
+      desc = "Toggle Copilot auto-trigger",
+    },
+  },
 }

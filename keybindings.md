@@ -535,6 +535,7 @@ GitHub Copilot muestra sugerencias "ghost text" mientras escribes en modo insert
 | `Alt-]` | i | Siguiente sugerencia |
 | `Alt-[` | i | Sugerencia anterior |
 | `Alt-e` | i | Descartar sugerencia |
+| `<leader>aT` | n | Activar/desactivar auto-trigger de sugerencias |
 
 Comandos útiles:
 
@@ -580,7 +581,7 @@ Para que funcione correctamente:
 
 | Tecla | Acción |
 |---|---|
-| `<leader>` | Mostrar menú de atajos |
+| `<leader>` | Mostrar menú de atajos (automático tras 200 ms) |
 | `<leader>?` | Mostrar atajos locales del buffer |
 
 ### 2.21 Comentarios (Neovim nativo)

@@ -59,8 +59,11 @@ vim.opt.signcolumn = 'yes'
 -- Decrease update time
 vim.opt.updatetime = 250
 
--- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
+-- Mapped sequence wait time.
+-- Increase to give which-key enough time to show the popup (delay = 200ms)
+-- before the sequence times out. 300ms is too tight → popup appears and
+-- disappears before you can read it, or doesn't appear at all under load.
+vim.opt.timeoutlen = 500
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
