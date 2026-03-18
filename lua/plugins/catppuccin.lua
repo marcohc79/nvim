@@ -80,5 +80,18 @@ return {
 
 		-- setup must be called before loading
 		vim.cmd.colorscheme "catppuccin"
+
+		-- Safety net: re-apply after all plugins have initialized.
+		-- Handles terminals that enable true-color support asynchronously
+		-- (e.g. some configurations on openSUSE Tumbleweed) where the first
+		-- application above may happen before the terminal negotiates truecolor.
+		vim.api.nvim_create_autocmd("VimEnter", {
+			once = true,
+			nested = true,
+			callback = function()
+				vim.opt.termguicolors = true
+				vim.cmd.colorscheme "catppuccin"
+			end,
+		})
 	end
 }

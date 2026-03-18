@@ -1,3 +1,9 @@
+-- These must be set before lazy.nvim loads any plugin, otherwise catppuccin
+-- and mini.icons execute before 24-bit color and nerd-font support are enabled,
+-- causing the colorscheme to apply in 256-color mode (intermittent on some systems).
+vim.opt.termguicolors = true
+vim.g.have_nerd_font = true
+
 require("config.lazy")
 require("config.keymaps")
 require("config.options")
