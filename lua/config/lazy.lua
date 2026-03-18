@@ -16,6 +16,13 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- nvim-treesitter (v1.x) installs parsers and queries into
+-- stdpath("data")/site, but that path is NOT in Neovim's runtimepath by
+-- default.  Adding it here (before lazy.nvim loads any plugin) fixes the
+-- ":checkhealth nvim-treesitter" error:
+--   ❌ ERROR is not in runtimepath.
+vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/site")
+
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
