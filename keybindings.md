@@ -527,6 +527,27 @@ Usar `i` (inside) / `a` (around) con operadores (`v`, `d`, `c`, `y`):
 
 GitHub Copilot muestra sugerencias "ghost text" mientras escribes en modo insertar.
 
+#### Requisitos previos (sin tocar el código)
+
+Para que `<leader>aT` y el resto de atajos de Copilot funcionen necesitas tener
+instalado/configurado lo siguiente **en tu sistema**, no en Neovim:
+
+| Requisito | Por qué |
+|---|---|
+| **Node.js ≥ 18** (`node` en el PATH) | `copilot.lua` arranca el servidor de Copilot como proceso Node |
+| **Cuenta de GitHub con suscripción a Copilot** | El servidor necesita credenciales válidas para servir sugerencias |
+| **Autenticación activa** (`:Copilot auth`) | Vincula tu sesión de Neovim con tu cuenta de GitHub |
+
+> **Comprobación rápida:**
+> ```
+> node --version   # debe devolver v18 o superior
+> :Copilot status  # debe mostrar "Copilot: Ready"
+> ```
+>
+> Si `node` no está en el PATH, instálalo con tu gestor de paquetes habitual
+> (`brew install node`, `apt install nodejs`, `winget install OpenJS.NodeJS`, …).
+> Después reinicia Neovim y ejecuta `:Copilot auth` si aún no te has autenticado.
+
 | Tecla | Modo | Acción |
 |---|---|---|
 | `Alt-y` | i | Aceptar sugerencia completa |
