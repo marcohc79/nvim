@@ -534,7 +534,7 @@ instalado/configurado lo siguiente **en tu sistema**, no en Neovim:
 
 | Requisito | Por qué |
 |---|---|
-| **Node.js ≥ 18** (`node` en el PATH) | `copilot.lua` arranca el servidor de Copilot como proceso Node |
+| **Node.js v18+** (`node` en el PATH) | `copilot.lua` arranca el servidor de Copilot como proceso Node |
 | **Cuenta de GitHub con suscripción a Copilot** | El servidor necesita credenciales válidas para servir sugerencias |
 | **Autenticación activa** (`:Copilot auth`) | Vincula tu sesión de Neovim con tu cuenta de GitHub |
 

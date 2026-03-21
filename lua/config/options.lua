@@ -1,4 +1,5 @@
 -- Set to true if you have a Nerd Font installed and selected in the terminal
+-- (also set early in init.lua before plugins load)
 vim.g.have_nerd_font = true
 
 -- Disable unused providers (removes checkhealth warnings)

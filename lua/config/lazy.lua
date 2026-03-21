@@ -15,6 +15,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
+-- nvim-treesitter v1.x installs parsers to stdpath("data")/site, which
+-- Neovim does not add to runtimepath automatically.
+vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/site")
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.

@@ -1,3 +1,9 @@
+-- These must be set BEFORE loading lazy.nvim so that plugins that load
+-- immediately (lazy = false, e.g. catppuccin) already have true-color
+-- enabled and know a Nerd Font is present.
+vim.opt.termguicolors = true
+vim.g.have_nerd_font = true
+
 require("config.lazy")
 require("config.keymaps")
 require("config.options")
