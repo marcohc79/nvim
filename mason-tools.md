@@ -37,7 +37,9 @@ Revisión de las herramientas instaladas vía `:Mason` y su estado en la configu
 | rust-analyzer | LSP | `lsp/rust_analyzer.lua` |
 | taplo | LSP | `lsp/taplo.lua` |
 | texlab | LSP | `lsp/texlab.lua` |
+| tinymist | LSP | `lsp/tinymist.lua` |
 | typescript-language-server | LSP | `lsp/ts_ls.lua` |
+| typstyle | Formatter | `conform.nvim` |
 | vim-language-server | LSP | `lsp/vimls.lua` |
 | yaml-language-server | LSP | `lsp/yamlls.lua` |
 | zls | LSP | `lsp/zls.lua` |
