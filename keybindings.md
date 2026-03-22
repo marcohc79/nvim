@@ -50,7 +50,8 @@
 - [2.19 CopilotChat — Chat y agente](#219-copilotchat--chat-y-agente)
 - [2.20 Which-key](#220-which-key)
 - [2.21 Comentarios](#221-comentarios-neovim-nativo)
-- [2.22 Resumen de prefijos `<leader>`](#222-resumen-de-prefijos-leader)
+- [2.22 Typst — Preview y compilación](#222-typst--preview-y-compilación)
+- [2.23 Resumen de prefijos `<leader>`](#223-resumen-de-prefijos-leader)
 
 ---
 
@@ -591,7 +592,30 @@ Para que funcione correctamente:
 | `gcc` | Comentar / descomentar línea |
 | `gc` | Comentar / descomentar selección (modo visual) |
 
-### 2.22 Resumen de prefijos `<leader>`
+### 2.22 Typst — Preview y compilación
+
+| Tecla | Modo | Acción |
+|---|---|---|
+| `<leader>cp` | n | Abrir / cerrar previsualización en el navegador |
+
+> Atajo disponible **solo en archivos `.typ`** (definido en `ftplugin/typst.lua`).
+
+#### Cómo funciona
+
+| Función | Mecanismo |
+|---|---|
+| **Preview en vivo** | `typst-preview.nvim` abre el navegador con recarga instantánea mientras editas. Requiere `tinymist` instalado (`:MasonInstall tinymist`). |
+| **PDF automático al guardar** | El LSP `tinymist` exporta el PDF en la misma carpeta del `.typ` cada vez que guardas (`:w`). Configurado en `lsp/tinymist.lua` con `exportPdf = "onSave"`. |
+
+#### Comandos alternativos
+
+| Comando | Acción |
+|---|---|
+| `:TypstPreview` | Abrir preview |
+| `:TypstPreviewStop` | Cerrar preview |
+| `:TypstPreviewToggle` | Alternar preview |
+
+### 2.23 Resumen de prefijos `<leader>`
 
 | Prefijo | Grupo |
 |---|---|
