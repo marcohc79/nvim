@@ -7,8 +7,6 @@ return {
   ft = { "typst" },
   version = "1.*",
   opts = {
-    -- Abre el navegador automáticamente al lanzar la preview.
-    open_cmd = "xdg-open",
     -- Sincroniza la posición del cursor entre el editor y la preview.
     follow_cursor = true,
   },

@@ -607,6 +607,21 @@ Para que funcione correctamente:
 | **Preview en vivo** | `typst-preview.nvim` abre el navegador con recarga instantánea mientras editas. Requiere `tinymist` instalado (`:MasonInstall tinymist`). |
 | **PDF automático al guardar** | El LSP `tinymist` exporta el PDF en la misma carpeta del `.typ` cada vez que guardas (`:w`). Configurado en `lsp/tinymist.lua` con `exportPdf = "onSave"`. |
 
+#### URL de la preview
+
+La preview se sirve en `http://127.0.0.1:<puerto>`. El navegador se abre
+automáticamente la primera vez. La URL exacta con el número de puerto se
+puede ver en las notificaciones de Neovim (`:messages`) en el momento en
+que el servidor arranca.
+
+#### Mensaje "Opening another frontend"
+
+Aparece cuando **dos** pestañas del navegador se conectan al mismo servidor
+de preview (por ejemplo, si la pestaña anterior seguía abierta y se reconectó
+sola al reiniciar). No es un error: ambas pestañas muestran la preview
+correctamente. Para evitarlo, **cierra la pestaña del navegador antes de
+detener la preview** con `<leader>cp` (`:TypstPreviewToggle`).
+
 #### Comandos alternativos
 
 | Comando | Acción |
