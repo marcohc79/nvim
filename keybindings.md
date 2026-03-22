@@ -597,6 +597,7 @@ Para que funcione correctamente:
 | Tecla | Modo | Acción |
 |---|---|---|
 | `<leader>cp` | n | Abrir / cerrar previsualización en el navegador |
+| `<leader>co` | n | Abrir el PDF generado en el visor del sistema |
 
 > Atajo disponible **solo en archivos `.typ`** (definido en `ftplugin/typst.lua`).
 
@@ -606,6 +607,36 @@ Para que funcione correctamente:
 |---|---|
 | **Preview en vivo** | `typst-preview.nvim` abre el navegador con recarga instantánea mientras editas. Requiere `tinymist` instalado (`:MasonInstall tinymist`). |
 | **PDF automático al guardar** | El LSP `tinymist` exporta el PDF en la misma carpeta del `.typ` cada vez que guardas (`:w`). Configurado en `lsp/tinymist.lua` con `exportPdf = "onSave"`. |
+
+#### Página A4 con bordes visibles en la preview
+
+El tamaño y los bordes de página que se ven en el navegador los controla el
+propio documento Typst, **no el plugin de preview**. Si el archivo no declara
+`#set page(...)`, Typst usa Letter (EE. UU.) por defecto.
+
+Para obtener una hoja A4 con bordes visibles escribe al principio del `.typ`:
+
+```typst
+#set page("a4", margin: (x: 2cm, y: 2.5cm))
+#set text(font: "New Computer Modern", size: 11pt, lang: "es")
+#set par(justify: true)
+```
+
+**Snippet rápido** — en modo Insert, escribe `a4doc` y pulsa `<Tab>`:
+inserta automáticamente el bloque anterior con el cursor en el título.
+(El snippet está definido en `snippets/typst.json`.)
+
+#### Dónde se guarda el PDF
+
+Cada vez que guardas (`:w`), `tinymist` genera un PDF **en la misma carpeta
+que el archivo `.typ`** con el mismo nombre base:
+
+```
+~/documentos/informe.typ  →  ~/documentos/informe.pdf
+```
+
+El PDF se sobreescribe en cada guardado. Para abrirlo directamente desde
+Neovim usa `<leader>co` (atajo definido en `ftplugin/typst.lua`).
 
 #### URL de la preview
 

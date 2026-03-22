@@ -1,0 +1,15 @@
+{
+  "A4 Document": {
+    "prefix": ["a4doc"],
+    "body": [
+      "#set page(\"a4\", margin: (x: 2cm, y: 2.5cm))",
+      "#set text(font: \"New Computer Modern\", size: 11pt, lang: \"es\")",
+      "#set par(justify: true)",
+      "",
+      "= ${1:Título}",
+      "",
+      "${0}"
+    ],
+    "description": "Documento Typst con página A4, márgenes y tipografía básica"
+  }
+}
