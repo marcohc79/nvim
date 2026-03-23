@@ -598,8 +598,9 @@ Para que funcione correctamente:
 |---|---|---|
 | `<leader>cp` | n | Abrir / cerrar previsualización en el navegador |
 | `<leader>co` | n | Abrir el PDF generado en el visor del sistema |
+| `<leader>ce` | n | Exportar PDF **ahora mismo** vía tinymist (atajo manual) |
 
-> Atajo disponible **solo en archivos `.typ`** (definido en `ftplugin/typst.lua`).
+> Atajos disponibles **solo en archivos `.typ`** (definidos en `ftplugin/typst.lua`).
 
 #### Cómo funciona
 
@@ -607,6 +608,7 @@ Para que funcione correctamente:
 |---|---|
 | **Preview en vivo** | `typst-preview.nvim` abre el navegador con recarga instantánea mientras editas. Requiere `tinymist` instalado (`:MasonInstall tinymist`). |
 | **PDF automático al guardar** | El LSP `tinymist` exporta el PDF en la misma carpeta del `.typ` cada vez que guardas (`:w`). Configurado en `lsp/tinymist.lua` con `exportPdf = "onSave"`. |
+| **PDF manual** | `<leader>ce` invoca el comando `tinymist.exportPdf` directamente; útil para probar que el servidor está activo y configurado. |
 
 #### Página A4 con bordes visibles en la preview
 
@@ -647,6 +649,30 @@ automáticamente cada vez que guardas el archivo `.typ`:
 
 > **Requisito previo:** `tinymist` debe estar instalado. Si aún no lo
 > tienes, ejecuta `:MasonInstall tinymist` dentro de Neovim.
+
+#### El PDF no se genera — diagnóstico
+
+Si después de guardar el PDF no aparece, sigue estos pasos:
+
+1. **Comprueba que tinymist está corriendo:**  
+   `:checkhealth lsp` → debe aparecer `tinymist` con estado `running`.  
+   O bien: `:lua print(vim.inspect(vim.lsp.get_clients({ name = "tinymist" })))`.
+
+2. **Fuerza la exportación manualmente:**  
+   Pulsa `<leader>ce` (con un archivo `.typ` abierto). Neovim mostrará
+   una notificación con el resultado o el error exacto.
+
+3. **Consulta el log del LSP:**  
+   `:LspLog` abre el log de todos los servidores LSP. Busca líneas con
+   `tinymist` y `exportPdf` para ver si hay errores de compilación.  
+   Puedes aumentar la verbosidad antes de reiniciar con:
+   ```vim
+   :lua vim.lsp.set_log_level("debug")
+   ```
+   Luego abre de nuevo el `.typ`, guarda, y revisa `:LspLog`.
+
+4. **Verifica que tinymist tiene permisos de escritura** en la carpeta
+   donde está el archivo `.typ`.
 
 #### URL de la preview
 

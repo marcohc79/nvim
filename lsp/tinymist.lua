@@ -1,15 +1,24 @@
 -- tinymist: Typst language server
 -- https://github.com/Myriad-Dreamin/tinymist
 -- Instalar: Mason `:MasonInstall tinymist`
+--
+-- NOTA: las claves de configuración van en el nivel RAÍZ, sin el wrapper
+-- "tinymist" (que es solo una convención de VSCode para sus namespaces).
+-- Se entregan por dos vías para garantizar que lleguen:
+--   1. init_options  → initializationOptions al arrancar el servidor (más fiable)
+--   2. on_attach     → workspace/didChangeConfiguration justo al conectarse
 return {
-  settings = {
-    tinymist = {
-      exportPdf = "onSave",
-      formatterMode = "typstyle",
-    },
+  -- 1. Enviadas en el handshake inicial (initializationOptions)
+  init_options = {
+    exportPdf = "onSave",
+    formatterMode = "typstyle",
   },
-  -- tinymist no solicita workspace/configuration al arrancar, por lo que hay
-  -- que empujar la configuración explícitamente para que exportPdf surta efecto.
+  -- 2. Necesario para que workspace/configuration requests funcionen también
+  settings = {
+    exportPdf = "onSave",
+    formatterMode = "typstyle",
+  },
+  -- 3. Empuje explícito al conectarse, por si el servidor ya está en marcha
   on_attach = function(client)
     client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
   end,
