@@ -626,17 +626,27 @@ Para obtener una hoja A4 con bordes visibles escribe al principio del `.typ`:
 inserta automáticamente el bloque anterior con el cursor en el título.
 (El snippet está definido en `snippets/typst.json`.)
 
-#### Dónde se guarda el PDF
+#### Cómo generar el PDF (paso a paso)
 
-Cada vez que guardas (`:w`), `tinymist` genera un PDF **en la misma carpeta
-que el archivo `.typ`** con el mismo nombre base:
+No es necesario tocar ningún archivo de configuración. El PDF se crea
+automáticamente cada vez que guardas el archivo `.typ`:
 
-```
-~/documentos/informe.typ  →  ~/documentos/informe.pdf
-```
+1. Abre o crea un archivo Typst, por ejemplo:
+   ```
+   nvim ~/documentos/informe.typ
+   ```
+2. Escribe o edita el contenido del documento.
+3. Guarda con `:w` (o el atajo que tengas para guardar).  
+   En ese momento `tinymist` compila el archivo y genera el PDF **en la
+   misma carpeta**, con el mismo nombre base:
+   ```
+   ~/documentos/informe.typ  →  ~/documentos/informe.pdf
+   ```
+4. El PDF se sobreescribe en cada guardado. Para abrirlo desde Neovim
+   pulsa `<leader>co`; eso lo abre en el visor de PDF del sistema.
 
-El PDF se sobreescribe en cada guardado. Para abrirlo directamente desde
-Neovim usa `<leader>co` (atajo definido en `ftplugin/typst.lua`).
+> **Requisito previo:** `tinymist` debe estar instalado. Si aún no lo
+> tienes, ejecuta `:MasonInstall tinymist` dentro de Neovim.
 
 #### URL de la preview
 
