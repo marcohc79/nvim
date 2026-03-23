@@ -50,7 +50,8 @@
 - [2.19 CopilotChat — Chat y agente](#219-copilotchat--chat-y-agente)
 - [2.20 Which-key](#220-which-key)
 - [2.21 Comentarios](#221-comentarios-neovim-nativo)
-- [2.22 Resumen de prefijos `<leader>`](#222-resumen-de-prefijos-leader)
+- [2.22 Typst — Preview y compilación](#222-typst--preview-y-compilación)
+- [2.23 Resumen de prefijos `<leader>`](#223-resumen-de-prefijos-leader)
 
 ---
 
@@ -591,7 +592,126 @@ Para que funcione correctamente:
 | `gcc` | Comentar / descomentar línea |
 | `gc` | Comentar / descomentar selección (modo visual) |
 
-### 2.22 Resumen de prefijos `<leader>`
+### 2.22 Typst — Preview y compilación
+
+| Tecla | Modo | Acción |
+|---|---|---|
+| `<leader>cp` | n | Abrir / cerrar previsualización en el navegador |
+| `<leader>co` | n | Abrir el PDF generado en el visor del sistema |
+| `<leader>ce` | n | Exportar PDF **ahora mismo** (guarda primero; usa CLI si tinymist falla) |
+
+> Atajos disponibles **solo en archivos `.typ`** (definidos en `ftplugin/typst.lua`).
+
+#### Cómo funciona
+
+| Función | Mecanismo |
+|---|---|
+| **Preview en vivo** | `typst-preview.nvim` abre el navegador con recarga instantánea mientras editas. Requiere `tinymist` instalado (`:MasonInstall tinymist`). |
+| **PDF automático al guardar** | El LSP `tinymist` exporta el PDF en la misma carpeta del `.typ` cada vez que guardas (`:w`). Configurado en `lsp/tinymist.lua` con `exportPdf = "onSave"`. |
+| **PDF manual** | `<leader>ce` guarda el buffer, espera a que tinymist compile y exporta el PDF. Si tinymist no está disponible usa el CLI `typst compile` como fallback. |
+
+#### Página A4 con bordes visibles en la preview
+
+El tamaño y los bordes de página que se ven en el navegador los controla el
+propio documento Typst, **no el plugin de preview**. Si el archivo no declara
+`#set page(...)`, Typst usa Letter (EE. UU.) por defecto.
+
+Para obtener una hoja A4 con bordes visibles escribe al principio del `.typ`:
+
+```typst
+#set page("a4", margin: (x: 2cm, y: 2.5cm))
+#set text(font: "New Computer Modern", size: 11pt, lang: "es")
+#set par(justify: true)
+```
+
+**Snippets disponibles** — en modo Insert escribe el prefijo y pulsa `<Tab>`:
+
+| Prefijo | Descripción |
+|---|---|
+| `a4doc` | Plantilla A4 con márgenes, fuente y título |
+| `fig` | Figura con imagen, pie de foto y etiqueta |
+| `eq` | Ecuación en bloque con etiqueta |
+| `tbl` | Tabla con cabecera y pie de tabla |
+| `lnk` | Hipervínculo con texto personalizado |
+| `code` | Bloque de código con resaltado de sintaxis |
+
+(Los snippets están definidos en `snippets/typst.json`.)
+
+#### Cómo generar el PDF (paso a paso)
+
+No es necesario tocar ningún archivo de configuración. El PDF se crea
+automáticamente cada vez que guardas el archivo `.typ`:
+
+1. Abre o crea un archivo Typst, por ejemplo:
+   ```
+   nvim ~/documentos/informe.typ
+   ```
+2. Escribe o edita el contenido del documento.
+3. Guarda con `:w` (o el atajo que tengas para guardar).  
+   En ese momento `tinymist` compila el archivo y genera el PDF **en la
+   misma carpeta**, con el mismo nombre base:
+   ```
+   ~/documentos/informe.typ  →  ~/documentos/informe.pdf
+   ```
+4. El PDF se sobreescribe en cada guardado. Para abrirlo desde Neovim
+   pulsa `<leader>co`; eso lo abre en el visor de PDF del sistema.
+
+> **Requisito previo:** `tinymist` debe estar instalado. Si aún no lo
+> tienes, ejecuta `:MasonInstall tinymist` dentro de Neovim.
+
+#### El PDF no se genera — diagnóstico
+
+Si después de guardar el PDF no aparece, sigue estos pasos:
+
+1. **Usa `<leader>ce` para generar el PDF directamente:**  
+   Este atajo guarda el buffer automáticamente, espera a que tinymist
+   compile y solicita la exportación. Si tinymist no está disponible
+   intenta con el CLI `typst`. La notificación mostrará el resultado o
+   el error exacto. _No necesitas guardar manualmente antes de pulsarlo._
+
+   > Si el buffer nunca tuvo nombre (`:w` nunca fue ejecutado con un
+   > nombre de archivo), el atajo lo avisará con un error.
+
+2. **Comprueba que tinymist está corriendo:**  
+   `:checkhealth lsp` → debe aparecer `tinymist` con estado `running`.  
+   O bien: `:lua print(vim.inspect(vim.lsp.get_clients({ name = "tinymist" })))`.
+
+3. **Consulta el log del LSP:**  
+   `:LspLog` abre el log de todos los servidores LSP. Busca líneas con
+   `tinymist` y `exportPdf` para ver si hay errores de compilación.  
+   Puedes aumentar la verbosidad antes de reiniciar con:
+   ```vim
+   :lua vim.lsp.set_log_level("debug")
+   ```
+   Luego abre de nuevo el `.typ`, guarda, y revisa `:LspLog`.
+
+4. **Verifica que tinymist tiene permisos de escritura** en la carpeta
+   donde está el archivo `.typ`.
+
+#### URL de la preview
+
+La preview se sirve en `http://127.0.0.1:<puerto>`. El navegador se abre
+automáticamente la primera vez. La URL exacta con el número de puerto se
+puede ver en las notificaciones de Neovim (`:messages`) en el momento en
+que el servidor arranca.
+
+#### Mensaje "Opening another frontend"
+
+Aparece cuando **dos** pestañas del navegador se conectan al mismo servidor
+de preview (por ejemplo, si la pestaña anterior seguía abierta y se reconectó
+sola al reiniciar). No es un error: ambas pestañas muestran la preview
+correctamente. Para evitarlo, **cierra la pestaña del navegador antes de
+detener la preview** con `<leader>cp` (`:TypstPreviewToggle`).
+
+#### Comandos alternativos
+
+| Comando | Acción |
+|---|---|
+| `:TypstPreview` | Abrir preview |
+| `:TypstPreviewStop` | Cerrar preview |
+| `:TypstPreviewToggle` | Alternar preview |
+
+### 2.23 Resumen de prefijos `<leader>`
 
 | Prefijo | Grupo |
 |---|---|

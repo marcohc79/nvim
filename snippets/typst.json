@@ -1,0 +1,62 @@
+{
+  "A4 Document": {
+    "prefix": ["a4doc"],
+    "body": [
+      "#set page(\"a4\", margin: (x: 2cm, y: 2.5cm))",
+      "#set text(font: \"New Computer Modern\", size: 11pt, lang: \"es\")",
+      "#set par(justify: true)",
+      "",
+      "= ${1:Título}",
+      "",
+      "${0}"
+    ],
+    "description": "Documento Typst con página A4, márgenes y tipografía básica"
+  },
+  "Figure": {
+    "prefix": ["fig"],
+    "body": [
+      "#figure(",
+      "  image(\"${1:ruta/imagen.png}\", width: ${2:80%}),",
+      "  caption: [${3:Descripción de la figura}],",
+      ")<${4:etiqueta}>"
+    ],
+    "description": "Figura con imagen, pie de foto y etiqueta para referencia"
+  },
+  "Display Equation": {
+    "prefix": ["eq"],
+    "body": [
+      "$ ${1:expresión} $ <${2:etiqueta}>"
+    ],
+    "description": "Ecuación en bloque con etiqueta para referencia cruzada"
+  },
+  "Table": {
+    "prefix": ["tbl"],
+    "body": [
+      "#figure(",
+      "  table(",
+      "    columns: ${1:3},",
+      "    table.header([*${2:Col 1}*], [*${3:Col 2}*], [*${4:Col 3}*]),",
+      "    ${5:// filas}",
+      "  ),",
+      "  caption: [${6:Descripción de la tabla}],",
+      ")<${7:etiqueta}>"
+    ],
+    "description": "Tabla con cabecera, pie de tabla y etiqueta"
+  },
+  "Hyperlink": {
+    "prefix": ["lnk"],
+    "body": [
+      "#link(\"${1:https://ejemplo.com}\")[${2:texto del enlace}]"
+    ],
+    "description": "Hipervínculo con texto personalizado"
+  },
+  "Code Block": {
+    "prefix": ["code"],
+    "body": [
+      "```${1:python}",
+      "${2:código}",
+      "```"
+    ],
+    "description": "Bloque de código con resaltado de sintaxis"
+  }
+}

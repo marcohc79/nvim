@@ -23,6 +23,7 @@ return {
       latex    = { "latexindent" },
       markdown = { "mdformat" },            -- :MasonInstall mdformat
       rust     = { "rustfmt" },             -- rustup component add rustfmt
+      typst    = { "typstyle" },            -- :MasonInstall typstyle
     },
     -- Formatear automáticamente al guardar (:w / Ctrl+S):
     format_on_save = {
