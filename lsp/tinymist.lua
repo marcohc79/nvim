@@ -18,7 +18,10 @@ return {
     exportPdf = "onSave",
     formatterMode = "typstyle",
   },
-  -- 3. Empuje explícito al conectarse, por si el servidor ya está en marcha
+  -- 3. Empuje explícito al conectarse: garantiza que el servidor recibe la
+  --    configuración incluso si no emitió workspace/configuration durante el
+  --    handshake (comportamiento habitual de tinymist) o si se reconectó
+  --    a un proceso ya en marcha.
   on_attach = function(client)
     client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
   end,

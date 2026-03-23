@@ -654,13 +654,18 @@ automáticamente cada vez que guardas el archivo `.typ`:
 
 Si después de guardar el PDF no aparece, sigue estos pasos:
 
-1. **Comprueba que tinymist está corriendo:**  
+1. **Usa `<leader>ce` para generar el PDF directamente:**  
+   Este atajo guarda el buffer automáticamente, espera a que tinymist
+   compile y solicita la exportación. Si tinymist no está disponible
+   intenta con el CLI `typst`. La notificación mostrará el resultado o
+   el error exacto. _No necesitas guardar manualmente antes de pulsarlo._
+
+   > Si el buffer nunca tuvo nombre (`:w` nunca fue ejecutado con un
+   > nombre de archivo), el atajo lo avisará con un error.
+
+2. **Comprueba que tinymist está corriendo:**  
    `:checkhealth lsp` → debe aparecer `tinymist` con estado `running`.  
    O bien: `:lua print(vim.inspect(vim.lsp.get_clients({ name = "tinymist" })))`.
-
-2. **Fuerza la exportación manualmente:**  
-   Pulsa `<leader>ce` (con un archivo `.typ` abierto). Neovim mostrará
-   una notificación con el resultado o el error exacto.
 
 3. **Consulta el log del LSP:**  
    `:LspLog` abre el log de todos los servidores LSP. Busca líneas con
