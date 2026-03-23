@@ -598,7 +598,7 @@ Para que funcione correctamente:
 |---|---|---|
 | `<leader>cp` | n | Abrir / cerrar previsualización en el navegador |
 | `<leader>co` | n | Abrir el PDF generado en el visor del sistema |
-| `<leader>ce` | n | Exportar PDF **ahora mismo** vía tinymist (atajo manual) |
+| `<leader>ce` | n | Exportar PDF **ahora mismo** (guarda primero; usa CLI si tinymist falla) |
 
 > Atajos disponibles **solo en archivos `.typ`** (definidos en `ftplugin/typst.lua`).
 
@@ -608,7 +608,7 @@ Para que funcione correctamente:
 |---|---|
 | **Preview en vivo** | `typst-preview.nvim` abre el navegador con recarga instantánea mientras editas. Requiere `tinymist` instalado (`:MasonInstall tinymist`). |
 | **PDF automático al guardar** | El LSP `tinymist` exporta el PDF en la misma carpeta del `.typ` cada vez que guardas (`:w`). Configurado en `lsp/tinymist.lua` con `exportPdf = "onSave"`. |
-| **PDF manual** | `<leader>ce` invoca el comando `tinymist.exportPdf` directamente; útil para probar que el servidor está activo y configurado. |
+| **PDF manual** | `<leader>ce` guarda el buffer, espera a que tinymist compile y exporta el PDF. Si tinymist no está disponible usa el CLI `typst compile` como fallback. |
 
 #### Página A4 con bordes visibles en la preview
 
@@ -624,9 +624,18 @@ Para obtener una hoja A4 con bordes visibles escribe al principio del `.typ`:
 #set par(justify: true)
 ```
 
-**Snippet rápido** — en modo Insert, escribe `a4doc` y pulsa `<Tab>`:
-inserta automáticamente el bloque anterior con el cursor en el título.
-(El snippet está definido en `snippets/typst.json`.)
+**Snippets disponibles** — en modo Insert escribe el prefijo y pulsa `<Tab>`:
+
+| Prefijo | Descripción |
+|---|---|
+| `a4doc` | Plantilla A4 con márgenes, fuente y título |
+| `fig` | Figura con imagen, pie de foto y etiqueta |
+| `eq` | Ecuación en bloque con etiqueta |
+| `tbl` | Tabla con cabecera y pie de tabla |
+| `lnk` | Hipervínculo con texto personalizado |
+| `code` | Bloque de código con resaltado de sintaxis |
+
+(Los snippets están definidos en `snippets/typst.json`.)
 
 #### Cómo generar el PDF (paso a paso)
 

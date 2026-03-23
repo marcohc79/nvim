@@ -23,7 +23,11 @@ vim.keymap.set("n", "<leader>ce", function()
   end
 
   -- Guardar SIEMPRE primero: tinymist compila desde el disco, no desde el buffer
-  vim.cmd("write")
+  local ok, err = pcall(vim.cmd, "write")
+  if not ok then
+    vim.notify("No se pudo guardar el archivo: " .. tostring(err), vim.log.levels.ERROR)
+    return
+  end
 
   -- Fallback: compilar con typst CLI si tinymist no está disponible o falla
   local function compile_with_cli()
@@ -57,7 +61,9 @@ vim.keymap.set("n", "<leader>ce", function()
         -- LSP falló: intentar con CLI
         compile_with_cli()
       else
-        vim.notify("PDF exportado: " .. vim.inspect(result), vim.log.levels.INFO)
+        local path = type(result) == "string" and result
+          or vim.fn.fnamemodify(filepath, ":r") .. ".pdf"
+        vim.notify("PDF exportado: " .. path, vim.log.levels.INFO)
       end
     end, bufnr)
   end, TINYMIST_COMPILE_DELAY_MS)
