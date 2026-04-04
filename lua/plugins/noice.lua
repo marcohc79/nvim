@@ -14,6 +14,20 @@ return {
         ["vim.lsp.util.stylize_markdown"] = true,
       },
     },
+
+    -- Filtros de mensajes: descartar notificaciones que no aportan valor pero
+    -- pueden saturar la cola interna de noice y congelar los floating windows
+    -- (blink.cmp y which-key dejan de responder cuando esto ocurre).
+    routes = {
+      -- Suprimir el spam de progreso del indexador de clangd ($/progress).
+      -- Con --background-index activo, clangd envía decenas de "indexing…"
+      -- por sesión; redirigirlos a /dev/null evita que noice se trabe.
+      {
+        filter = { event = "lsp", kind = "progress", find = "clangd" },
+        opts   = { skip = true },
+      },
+    },
+
     presets = {
       bottom_search = false,
       command_palette = true,
