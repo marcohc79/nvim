@@ -64,20 +64,30 @@ return {
     "--fallback-style=none",
   },
 
-  -- Si clangd termina de forma inesperada (señal, OOM, etc.) se relanza
-  -- automáticamente en todos los buffers C/C++ abiertos para que el
-  -- autocompletado vuelva solo, sin necesidad de :LspRestart manual.
-  -- El guard evita adjuntar un segundo cliente si uno ya está activo
-  -- (p.ej. si el SO relanzó clangd antes de que llegase este callback).
-  on_exit = function(code, _signal, _client_id)
+  -- Si clangd termina (limpiamente o por error) se registra en el log de
+  -- diagnóstico para dejar traza si el problema vuelve a ocurrir.
+  -- Ante una salida inesperada (code != 0) se relanza automáticamente en
+  -- todos los buffers C/C++ abiertos; el guard evita clientes duplicados.
+  on_exit = function(code, signal, _client_id)
+    -- Registrar siempre la salida, tanto limpia como accidental.
+    local ok, diag = pcall(require, "config.lsp-diagnostics")
+    if ok then
+      local level = code == 0 and "INFO" or "ERROR"
+      diag.log(level, string.format(
+        "clangd exited | code=%d signal=%d%s",
+        code, signal,
+        code ~= 0 and " — restarting in open C/C++ buffers" or ""
+      ))
+    end
+
     if code ~= 0 then
       vim.schedule(function()
         for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
           if vim.api.nvim_buf_is_loaded(bufnr) then
             local ft = vim.bo[bufnr].filetype
             if vim.tbl_contains({ "c", "cpp", "objc", "cuda" }, ft) then
-              local already = vim.lsp.get_clients({ bufnr = bufnr, name = "clangd" })
-              if #already == 0 then
+              local existing_clients = vim.lsp.get_clients({ bufnr = bufnr, name = "clangd" })
+              if #existing_clients == 0 then
                 vim.api.nvim_exec_autocmds("FileType", { pattern = ft, buf = bufnr })
               end
             end

@@ -10,3 +10,8 @@ for _, path in ipairs(vim.fn.glob(vim.fn.stdpath("config") .. "/lsp/*.lua", fals
   servers[#servers + 1] = vim.fn.fnamemodify(path, ":t:r")
 end
 vim.lsp.enable(servers)
+
+-- Telemetría LSP: registra attach/detach, crashes de clangd y bursts de
+-- $/progress para diagnosticar congelamientos si vuelven a reproducirse.
+-- Log: ~/.local/state/nvim/lsp-diag.log  |  Ver con :LspDiag
+require("config.lsp-diagnostics")
