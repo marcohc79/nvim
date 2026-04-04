@@ -79,7 +79,9 @@ return {
       animate = {
         enabled = true,
         duration = 12,
-        fps = 144,
+        -- 60fps es suficiente y evita saturar la cola de eventos de Neovim
+        -- (144fps causaba acumulación de tareas y congelaba la UI bajo carga).
+        fps = 60,
         easing = "outCubic",
       },
 

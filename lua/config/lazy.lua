@@ -28,6 +28,10 @@ require("lazy").setup({
 		-- import your plugins
 		{ import = "plugins" },
 	},
-	-- automatically check for plugin updates
-	checker = { enabled = true },
+	-- Comprobación silenciosa de actualizaciones; usa :Lazy para ver/aplicar.
+	-- notify = false evita que las notificaciones de actualización interrumpan
+	-- los floating windows de blink.cmp y which-key durante el trabajo.
+	checker = { enabled = true, notify = false },
+	-- Evitar que el file-watcher dispare recargas inesperadas del config.
+	change_detection = { enabled = false },
 })
