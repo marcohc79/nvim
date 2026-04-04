@@ -49,12 +49,6 @@ vim.opt.breakindent = true
 -- Save undo history
 vim.opt.undofile = true
 
--- Deshabilitar swap files: evita el aviso W325 "Ignoring swapfile from Nvim
--- process XXXXX" al abrir archivos como *.c, *.h o Makefile cuando existe un
--- swap de una sesión anterior o de otra instancia corriendo en paralelo.
--- El historial de deshacer persistente (undofile) cubre la misma necesidad.
-vim.opt.swapfile = false
-
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
