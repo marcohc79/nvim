@@ -19,11 +19,13 @@ return {
     -- pueden saturar la cola interna de noice y congelar los floating windows
     -- (blink.cmp y which-key dejan de responder cuando esto ocurre).
     routes = {
-      -- Suprimir el spam de progreso del indexador de clangd ($/progress).
-      -- Con --background-index activo, clangd envía decenas de "indexing…"
-      -- por sesión; redirigirlos a /dev/null evita que noice se trabe.
+      -- Suprimir las notificaciones $/progress de TODOS los servidores LSP.
+      -- Clangd (indexado), ltex_plus (análisis de gramática) y copilot generan
+      -- decenas de mensajes de progreso por sesión; saturan la cola interna de
+      -- noice y corrompen los floating windows de blink.cmp y which-key.
+      -- Antes solo se filtraba clangd; ltex_plus y copilot también contribuyen.
       {
-        filter = { event = "lsp", kind = "progress", find = "clangd" },
+        filter = { event = "lsp", kind = "progress" },
         opts   = { skip = true },
       },
     },

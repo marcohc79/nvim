@@ -41,6 +41,53 @@ function M.log(level, msg)
   end
 end
 
+-- Grupo de autocomandos único para todo el módulo.
+-- Se define antes del primer uso (VimEnter) para que todos los autocmds
+-- del módulo compartan el mismo grupo y puedan limpiarse con { clear = true }.
+local _lsp_diag_group = vim.api.nvim_create_augroup("LspDiagnostics", { clear = true })
+
+-- ── Marcas de arranque ────────────────────────────────────────────────────
+--
+-- VimEnter confirma que init.lua terminó sin error.
+-- VeryLazy confirma que todos los plugins lazy cargaron.
+-- Si el problema ocurre antes de VeryLazy, algún plugin está fallando al
+-- cargar; si ocurre después, es un error en tiempo de uso.
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = _lsp_diag_group,
+  once  = true,
+  desc  = "Registrar fin de startup",
+  callback = function()
+    M.log("INFO", "VimEnter — startup complete")
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  group   = _lsp_diag_group,
+  pattern = "VeryLazy",
+  once    = true,
+  desc    = "Registrar carga completa de plugins + activar captura de errores",
+  callback = function()
+    M.log("INFO", "VeryLazy — all plugins loaded")
+
+    -- A partir de aquí interceptar vim.notify para guardar en log cualquier
+    -- mensaje de nivel WARN o ERROR. Esto captura errores de plugins (which-key,
+    -- noice, blink…) que de otro modo solo aparecen en la UI y se pierden.
+    -- La intercepción se hace post-VeryLazy para no interferir con noice, que
+    -- reemplaza vim.notify durante su carga; al llegar aquí noice ya está
+    -- activo y la cadena queda:  noice → nuestro wrapper → original.
+    local orig_notify = vim.notify
+    vim.notify = function(msg, level, opts)
+      if level and level >= vim.log.levels.WARN then
+        local lvl = level >= vim.log.levels.ERROR and "ERROR" or "WARN"
+        -- Colapsar saltos de línea para que cada evento ocupe una sola línea.
+        M.log(lvl, "vim.notify: " .. tostring(msg):gsub("\n", " ↵ "))
+      end
+      return orig_notify(msg, level, opts)
+    end
+  end,
+})
+
 -- ── Detector de saturación de $/progress ─────────────────────────────────
 --
 -- La causa raíz del congelamiento histórico era que clangd enviaba ráfagas
@@ -53,8 +100,6 @@ end
 
 local BURST_THRESHOLD = 15  -- mensajes por segundo que se consideran "burst"
 local _progress_counts = {} -- { [server_name] = { count, window_start } }
-
-local _lsp_diag_group = vim.api.nvim_create_augroup("LspDiagnostics", { clear = true })
 
 vim.api.nvim_create_autocmd("LspNotify", {
   group = _lsp_diag_group,

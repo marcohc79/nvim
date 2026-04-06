@@ -45,6 +45,17 @@ return {
 
   },
 
+  config = function(_, opts)
+    require("which-key").setup(opts)
+    -- Confirmar en el log de diagnóstico que which-key cargó sin error.
+    -- Si el problema ocurre y esta línea NO aparece en el log, which-key
+    -- falló durante su setup (buscar un WARN/ERROR justo antes en el log).
+    local ok, diag = pcall(require, "config.lsp-diagnostics")
+    if ok then
+      diag.log("INFO", "which-key loaded OK")
+    end
+  end,
+
   keys = {
     {
       "<leader>?",
