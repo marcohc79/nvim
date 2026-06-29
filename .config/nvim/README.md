@@ -3,7 +3,10 @@
 A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
 Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
 
-# C y cpp
-✅ clangd
-✅ cpplint
-✅ codelldb
+Since Mason I installed:
+
+| C |
+| --------------- |
+| clangd |
+| cpplint |
+| codelldb |
