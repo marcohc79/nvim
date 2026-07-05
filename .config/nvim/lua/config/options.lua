@@ -3,6 +3,7 @@
 -- Add any additional options here
 
 vim.opt.smartindent = true
+vim.opt.spelllang = { "en", "es" }
 
 -- Fuerza que los archivos .h sean tratados como C y no como C++
 vim.filetype.add({
