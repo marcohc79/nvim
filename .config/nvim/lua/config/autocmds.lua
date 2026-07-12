@@ -23,6 +23,6 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
   pattern = "*.pdf",
   callback = function(ev)
     vim.fn.jobstart({ "zathura", ev.file }, { detach = true })
-    vim.api.nvim_buf_delete(ev.buf, { force = true })
+    vim.cmd("bprevious")
   end,
 })
