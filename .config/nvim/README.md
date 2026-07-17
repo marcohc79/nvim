@@ -5,8 +5,8 @@ Refer to the [documentation](https://lazyvim.github.io/installation) to get star
 
 Since Mason I installed:
 
-| C |
-| --------------- |
-| clangd |
-| cpplint |
+| C        |
+| -------- |
+| clangd   |
+| cpplint  |
 | codelldb |
