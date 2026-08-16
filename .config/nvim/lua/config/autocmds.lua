@@ -30,3 +30,12 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
     end)
   end,
 })
+
+-- Set SpellBad and SpellCap highlight groups with undercurl and custom colors
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_hl(0, "SpellBad", { undercurl = true, sp = "#eb6f92" })
+    vim.api.nvim_set_hl(0, "SpellCap", { undercurl = true, sp = "#f6c177" })
+  end,
+})
