@@ -19,3 +19,15 @@ vim.filetype.add({
     h = "c",
   },
 })
+
+-- Configuración de Molten
+local function find_venv_python()
+  local cwd = vim.fn.getcwd()
+  local venv_python = cwd .. "/.venv/bin/python"
+  if vim.fn.executable(venv_python) == 1 then
+    return venv_python
+  end
+  return vim.fn.exepath("python3") -- fallback al Python de sistema
+end
+
+vim.g.python3_host_prog = find_venv_python()
