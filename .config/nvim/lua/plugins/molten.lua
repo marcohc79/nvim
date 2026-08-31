@@ -6,8 +6,8 @@ return {
       backend = "kitty",
       processor = "magick_cli",
       integrations = {},
-      max_width = 100,
-      max_height = 12,
+      max_width = 150,
+      max_height = 40,
       max_height_window_percentage = math.huge,
       max_width_window_percentage = math.huge,
       window_overlap_clear_enabled = true,
@@ -21,11 +21,11 @@ return {
     build = ":UpdateRemotePlugins",
     init = function()
       vim.g.molten_image_provider = "image.nvim"
-      vim.g.molten_output_win_max_height = 20
+      vim.g.molten_output_win_max_height = 40
+      vim.g.molten_output_win_style = false
       vim.g.molten_auto_open_output = true
       vim.g.molten_wrap_output = true
       vim.g.molten_virt_text_output = true
-
       vim.keymap.set(
         "n",
         "<localleader>e",

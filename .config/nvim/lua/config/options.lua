@@ -12,6 +12,7 @@ opt.smartindent = true
 opt.spelllang = { "en", "es" }
 opt.textwidth = 120
 opt.winborder = "rounded"
+opt.wrap = true
 
 -- Fuerza que los archivos .h sean tratados como C y no como C++
 vim.filetype.add({
